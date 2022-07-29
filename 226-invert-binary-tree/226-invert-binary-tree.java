@@ -14,25 +14,15 @@
  * }
  */
 class Solution {
-    public void invert(TreeNode root){
-        Stack<TreeNode> stack = new Stack();
+    public TreeNode invert(TreeNode root){
         
-        while(true){
-            if(root != null){
-                stack.push(root);
-                root = root.left;
-            }
-            else{
-                if(stack.isEmpty())break;
-                root = stack.peek();
-                stack.pop();
-                TreeNode left = root.left;
-                root.left = root.right;
-                root.right = left;
-                root = root.left;
-            }
-        }
+        if(root == null)return null;
         
+        final TreeNode left = root.left, right = root.right;
+        root.left = invert(right);
+        root.right = invert(left);
+        
+        return root;
     }
     public TreeNode invertTree(TreeNode root) {
         invert(root);
