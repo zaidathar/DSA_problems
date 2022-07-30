@@ -1,24 +1,20 @@
 class Solution {
     public String[] findRelativeRanks(int[] score) {
-        int[] track = Arrays.copyOf(score,score.length);
-        Arrays.sort(track);
-        Map<Integer,Integer> mp = new HashMap<>();
-        int size = track.length;
-        for(int i = 0 ;i<size;i++){
-            mp.put(track[i],size-i);
-        }
-        
+        Integer[] index = new Integer[score.length];
+        for(int i = 0;i<score.length;i++)index[i]=i;
+        Arrays.sort(index , (a,b) -> (score[b]-score[a]));
         String[] winner= {"Gold Medal","Silver Medal","Bronze Medal"};
-        String[] res = new String[size];
-        
+        String[] res = new String[score.length];
+
+        for(Integer in : index)System.out.print(in+" ");
+        System.out.println();
         for(int i = 0;i<score.length; i++){
-            int standing = mp.get(score[i]);
-            
-            if(standing < 4){
-                res[i] = winner[standing-1];
+            int standing = index[i];
+            if(i < 3){
+                res[standing] = winner[i];
             }
             else{
-                res[i] = String.valueOf(standing);
+                res[standing] = String.valueOf(i+1);
             }
         }
         
